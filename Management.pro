@@ -10,14 +10,17 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    maininterface.cpp \
     mainwindow.cpp \
     sign_in.cpp
 
 HEADERS += \
+    maininterface.h \
     mainwindow.h \
     sign_in.h
 
 FORMS += \
+    maininterface.ui \
     mainwindow.ui \
     sign_in.ui
 

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "maininterface.h"
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QDebug>
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    MainInterface* a=new MainInterface();
+    a->show();
 }
 MainWindow::~MainWindow()
 {
