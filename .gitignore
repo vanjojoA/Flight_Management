@@ -1,0 +1,14 @@
+# Qt用户配置文件
+*.pro.user
+*.pro.user.*
+.qtcreator/
+
+# 构建目录（根据你的实际构建路径添加，比如）
+build/
+debug/
+release/
+
+# 其他临时文件
+*.o
+*.obj
+*.exe
