@@ -1,0 +1,14 @@
+# Qt 用户配置文件
+*.pro.user
+*.pro.user.*
+.qtcreator/
+
+# 构建目录
+build/
+debug/
+release/
+
+# 临时文件
+*.o
+*.obj
+*.exe
