@@ -57,14 +57,12 @@ int Single_Center::getUserId()
     if (currentUsername.isEmpty()) {
         return -1;
     }
-
-    QSqlQuery query;
-    query.prepare("SELECT UserID FROM users WHERE Username = ?");
-    query.addBindValue(currentUsername);
-    if (!query.exec() || !query.next()) {
-        return -1;
+    bool ok;
+    int userId = currentUsername.toInt(&ok);
+    if (ok && userId > 0) {
+        return userId;
     }
-    return query.value(0).toInt();
+    return -1;
 }
 
 void Single_Center::loadOrders()
@@ -94,9 +92,7 @@ void Single_Center::loadOrders()
         QMessageBox::critical(this, "错误", "查询订单失败：" + query.lastError().text());
         return;
     }
-
     ui->tableWidget_orders->setRowCount(0);
-
     int row = 0;
     while (query.next()) {
         ui->tableWidget_orders->insertRow(row);

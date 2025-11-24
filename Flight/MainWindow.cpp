@@ -7,6 +7,7 @@
 #include <QSqlError>
 #include "sign_in.h"
 #include "deal.h"
+#include "userprofile.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -40,7 +41,7 @@ void ConnectDatabase(){
         qDebug() << "数据库已连接！";
     }
 }
-bool checkUser(QString &username,QString &password){
+bool checkUserU(QString &username,QString &password){
     if (!QSqlDatabase::database().isOpen()) {
         qDebug() << "请先连接数据库！";
         return false;
@@ -56,6 +57,43 @@ bool checkUser(QString &username,QString &password){
     }
     return query.next();
 }
+bool checkUserI(QString &ID,QString &password){
+    if (!QSqlDatabase::database().isOpen()) {
+        qDebug() << "请先连接数据库！";
+        return false;
+    }
+    QSqlQuery query;
+    QString sql="SELECT IDCard, PWord FROM users where IDCard=? AND PWord=?";
+    query.prepare(sql);
+    query.addBindValue(ID);
+    query.addBindValue(password);
+    if (!query.exec()) {
+        qDebug() << "查询失败：" << query.lastError().text();
+        return false;
+    }
+    return query.next();
+}
+QString GetUserID(QString &input,QString &password){
+    if (!QSqlDatabase::database().isOpen()) {
+        qDebug() << "请先连接数据库！";
+        return QString();
+    }
+    QSqlQuery query;
+    query.prepare("SELECT UserID FROM users where Username=? AND PWord=?");
+    query.addBindValue(input);
+    query.addBindValue(password);
+    if(query.exec()&&query.next()){
+        return query.value(0).toString();
+    }
+    query.prepare("SELECT UserID FROM users where IDCard=? AND PWord=?");
+    query.addBindValue(input);
+    query.addBindValue(password);
+    if(query.exec()&&query.next()){
+        return query.value(0).toString();
+    }
+    return QString();
+}
+
 void MainWindow::on_log_in_clicked()
 {
     QString username=ui->Usernamet->text().trimmed();
@@ -65,17 +103,20 @@ void MainWindow::on_log_in_clicked()
         return;
     }
     ConnectDatabase();
-    bool ok=checkUser(username,password);
-    if(ok){
-        QMessageBox::information(this, "成功", "登录成功！");
-        Deal *d=new Deal(username);
+    QString userid=GetUserID(username,password);
+    if(!userid.isEmpty()){
+        QMessageBox::information(this,"成功","登录成功");
+        Deal*d=new Deal(userid);
         d->setAttribute(Qt::WA_DeleteOnClose);
         d->show();
         this->close();
+
     }
     else{
         QMessageBox::warning(this, "失败", "用户名或密码错误！");
     }
+    UserProfile *us=new UserProfile();
+    connect(this,SIGNAL(usernameSubmitted(QString)),us,SLOT(getData(QString)));
 }
 void MainWindow::on_sign_in_clicked()
 {
@@ -83,4 +124,5 @@ void MainWindow::on_sign_in_clicked()
     s->setAttribute(Qt::WA_DeleteOnClose);
     s->show();
 }
+
 

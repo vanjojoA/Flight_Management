@@ -14,37 +14,37 @@
 #include <QDateTime>
 #include <QTableWidgetItem>
 #include "mainwindow.h"
-
+#include "userprofile.h"
 Deal::Deal(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Deal)
 {
     ui->setupUi(this);
-    currentUsername = "";
+    currentUserID = "";
     initTable();
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit->setMinimumDate(QDate::currentDate());
     ui->stackedWidget->setCurrentWidget(ui->page_tickets);
 }
 
-Deal::Deal(const QString &username, QWidget *parent)
+Deal::Deal(const QString &userID, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Deal)
 {
     ui->setupUi(this);
-    currentUsername = username;
+    currentUserID = userID;
     initTable();
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit->setMinimumDate(QDate::currentDate());
     searchTickets();
 
-    m_personalCenterPage = new Single_Center(currentUsername, this);
+    m_personalCenterPage = new Single_Center(currentUserID, this);
     ui->stackedWidget->addWidget(m_personalCenterPage);
     connect(m_personalCenterPage, &Single_Center::backRequested, this, &Deal::showTicketSearchPage);
 
-    m_userProfilePage = new UserProfile(this);
+    m_userProfilePage = new UserProfile(userID,this);
     ui->stackedWidget->addWidget(m_userProfilePage);
-
+    m_userProfilePage->getData(currentUserID);
     connect(m_userProfilePage, &UserProfile::backRequested, this, &Deal::showTicketSearchPage);
 
     connect(m_userProfilePage, &UserProfile::myOrdersRequested, this, [=](){
@@ -167,18 +167,11 @@ void Deal::on_btn_search_clicked()
     searchTickets();
 }
 
-void Deal::on_btn_reset_clicked()
-{
-    ui->lineEdit_from->clear();
-    ui->lineEdit_to->clear();
-    ui->dateEdit->setDate(QDate::currentDate());
-    ui->comboBox_type->setCurrentIndex(0);
-    searchTickets();
-}
+
 
 void Deal::onBookTicket()
 {
-    if (currentUsername.isEmpty()) {
+    if (currentUserID.isEmpty()) {
         QMessageBox::warning(this, "提示", "请先登录！");
         return;
     }
@@ -189,14 +182,14 @@ void Deal::onBookTicket()
     int ticketId = btn->property("ticketId").toInt();
     
     // 获取当前用户ID
-    QSqlQuery query;
-    query.prepare("SELECT UserID FROM users WHERE Username = ?");
-    query.addBindValue(currentUsername);
-    if (!query.exec() || !query.next()) {
-        QMessageBox::warning(this, "错误", "获取用户信息失败！");
-        return;
-    }
-    int userId = query.value(0).toInt();
+    //QSqlQuery query;
+    //query.prepare("SELECT UserID FROM users WHERE Username = ?");
+    //query.addBindValue(currentUserID);
+    //if (!query.exec() || !query.next()) {
+    //    QMessageBox::warning(this, "错误", "获取用户信息失败！");
+    //    return;
+    //}
+    int userId = currentUserID.toInt();
 
     // 打开订单对话框
     OrderDialog *dialog = new OrderDialog(ticketId, userId, this);
@@ -214,10 +207,11 @@ void Deal::refreshTicketList()
 
 void Deal::on_Single_Center_clicked()
 {
-    if (currentUsername.isEmpty()) {
+    if (currentUserID.isEmpty()) {
         QMessageBox::warning(this, "提示", "请先登录！");
         return;
     }
+    m_userProfilePage->getData(currentUserID);
     ui->stackedWidget->setCurrentWidget(m_userProfilePage);
     // Single_Center *center = new Single_Center(currentUsername, this);
     // center->setAttribute(Qt::WA_DeleteOnClose);
@@ -226,7 +220,7 @@ void Deal::on_Single_Center_clicked()
 
 void Deal::on_Deal_2_clicked()
 {
-    if (currentUsername.isEmpty()) {
+    if (currentUserID.isEmpty()) {
         QMessageBox::warning(this, "提示", "请先登录！");
         return;
     }

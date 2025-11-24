@@ -15,7 +15,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+signals:
+    void usernameSubmitted(const QString &username);
 private slots:
     void on_log_in_clicked();
     void on_sign_in_clicked();

@@ -38,11 +38,32 @@ bool checkUsername(QString &username){
     }
 }
 
+bool checkUserID(QString &ID){
+    if (!QSqlDatabase::database().isOpen()) {
+        qDebug() << "数据库未连接，无法检查用户名！";
+        return false;
+    }
+    QSqlQuery query;
+    QString sql="SELECT IDCard FROM users WHERE IDCard=?";
+    query.prepare(sql);
+    query.addBindValue(ID);
+    if (!query.exec()) {
+        qDebug() << "检查用户ID失败：" << query.lastError().text();
+        return true;
+    }
+    if (query.next()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void Sign_in::on_Sign_in_Button_clicked()
 {
     QString username=ui->Sign_in_UsernameT->text().trimmed();
     QString password=ui->Sign_in_PassWordT->text().trimmed();
     QString passwordA=ui->Sign_in_PassWordAT->text().trimmed();
+    QString ID=ui->ID->text().trimmed();
     if(username.isEmpty()||password.isEmpty()){
         QMessageBox::warning(this, "提示", "用户名或密码不能为空！");
         return;
@@ -53,6 +74,10 @@ void Sign_in::on_Sign_in_Button_clicked()
     }
     if(passwordA!=password){
         QMessageBox::warning(this,"提示","请确认两次密码是否一致");
+        return;
+    }
+    if(ID.isEmpty()){
+        QMessageBox::warning(this,"提示","ID不能为空！");
         return;
     }
 
@@ -80,11 +105,16 @@ void Sign_in::on_Sign_in_Button_clicked()
         QMessageBox::warning(this, "提示", "该用户名已被注册，请更换！");
         return;
     }
+    if(checkUserID(ID)){
+        QMessageBox::warning(this, "提示", "该ID已被注册，请更换！");
+        return;
+    }
     QSqlQuery query;
-    QString insertSql = "INSERT INTO users (Username, PWord) VALUES (?, ?)";
+    QString insertSql = "INSERT INTO users (Username, PWord, IDCard) VALUES (?, ?, ?)";
     query.prepare(insertSql);
     query.addBindValue(username);
     query.addBindValue(password);
+    query.addBindValue(ID);
 
     if (query.exec()) {
         QMessageBox::information(this, "成功", "注册成功！");

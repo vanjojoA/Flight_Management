@@ -30,10 +30,13 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>130</y>
+     <y>170</y>
      <width>171</width>
      <height>27</height>
     </rect>
+   </property>
+   <property name="inputMask">
+    <string/>
    </property>
    <property name="placeholderText">
     <string>请输入你的密码...</string>
@@ -43,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>180</y>
+     <y>220</y>
      <width>171</width>
      <height>27</height>
     </rect>
@@ -68,8 +71,8 @@
   <widget class="QLabel" name="Sign_in_PassWord">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>140</y>
+     <x>180</x>
+     <y>180</y>
      <width>69</width>
      <height>19</height>
     </rect>
@@ -82,7 +85,7 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>190</y>
+     <y>230</y>
      <width>69</width>
      <height>19</height>
     </rect>
@@ -115,6 +118,35 @@
    </property>
    <property name="text">
     <string>取消</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>130</y>
+     <width>69</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>账户ID：</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="ID">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>130</y>
+     <width>171</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="inputMask">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>ID为账号的唯一凭证</string>
    </property>
   </widget>
  </widget>
