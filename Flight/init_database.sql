@@ -43,6 +43,15 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (TicketID) REFERENCES tickets(TicketID) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS favorites (
+    FavoriteID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    TicketID INT NOT NULL,
+    CreatedTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES users(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (TicketID) REFERENCES tickets(TicketID) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_ticket (UserID, TicketID)
+);
 -- 插入示例票务数据
 INSERT INTO tickets (TicketType, TicketNo, DepartureCity, ArrivalCity, DepartureTime, ArrivalTime, Price, TotalSeats, AvailableSeats, Company, Status) VALUES
 ('Flight', 'CA1234', '北京', '上海', '2024-12-20 08:00:00', '2024-12-20 10:30:00', 680.00, 150, 150, '中国国际航空', 'Available'),
