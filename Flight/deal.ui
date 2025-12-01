@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Deal</class>
+ <widget class="QWidget" name="Deal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>订票系统</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1001</width>
+     <height>701</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="page_tickets">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <widget class="QGroupBox" name="searchGroup">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>981</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(59, 59, 59);
+color: white;
+border-radius: 6px</string>
+     </property>
+     <property name="title">
+      <string>搜索票务</string>
+     </property>
+     <widget class="QLabel" name="label_from">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
+      <property name="text">
+       <string>出发地：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_from">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>28</y>
+        <width>120</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    background-color: #606060;
+    border: none;
+    border-bottom: 2px solid #606060;
+    border-radius: 6px 6px 0px 0px;
+    box-shadow: inset 2px 2px 5px #484848, 
+                inset -2px -2px 5px #787878;
+    padding: 4px 12px;
+    color: white;
+    font-size: 14px;
+}
+
+QLineEdit:focus {
+    border-bottom: 2px solid #0078d7;
+    background-color: #646464;
+}</string>
+      </property>
+      <property name="placeholderText">
+       <string>例如：北京</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_to">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
+      <property name="text">
+       <string>目的地：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_to">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>28</y>
+        <width>120</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    background-color: #606060;
+    border: none;
+    border-bottom: 2px solid #606060;
+    border-radius: 6px 6px 0px 0px;
+    box-shadow: inset 2px 2px 5px #484848, 
+                inset -2px -2px 5px #787878;
+    padding: 4px 12px;
+    color: white;
+    font-size: 14px;
+}
+
+QLineEdit:focus {
+    border-bottom: 2px solid #0078d7;
+    background-color: #646464;
+}</string>
+      </property>
+      <property name="placeholderText">
+       <string>例如：上海</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_date">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
+      <property name="text">
+       <string>日期：</string>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="dateEdit">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>20</y>
+        <width>141</width>
+        <height>33</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QDateEdit {
+    background-color: #606060;
+    border: none;
+    padding: 4px 25px 4px 8px;
+    color: white;
+    font-size: 13px;
+    min-height: 25px;
+    box-shadow: inset 2px 2px 5px #484848, 
+                inset -2px -2px 5px #787878;
+}
+
+QDateEdit:focus {
+    background-color: #646464;
+    box-shadow: inset 2px 2px 5px #404040, 
+                inset -2px -2px 5px #787878;
+}</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_type">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
+      </property>
+      <property name="text">
+       <string>类型：</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_type">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>20</y>
+        <width>131</width>
+        <height>33</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+    background-color: #606060;
+    border: none;
+    padding: 4px 25px 4px 8px;
+    color: white;
+    font-size: 13px;
+    min-height: 25px;
+    box-shadow: inset 2px 2px 5px #484848, 
+                inset -2px -2px 5px #787878;
+}
+
+QComboBox:focus {
+    background-color: #646464;
+}</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>全部</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>航班</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>火车</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>汽车</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="btn_search">
+      <property name="geometry">
+       <rect>
+        <x>880</x>
+        <y>20</y>
+        <width>80</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #606060;
+    border: none;
+    padding: 8px 16px;
+    color: white;
+    font-size: 13px;
+    box-shadow: inset 2px 2px 4px #484848, 
+                inset -2px -2px 4px #787878;
+}
+
+QPushButton:hover {
+    background-color: #646464;
+}
+
+QPushButton:pressed {
+    background-color: #5c5c5c;
+    box-shadow: inset 3px 3px 6px #404040, 
+                inset -3px -3px 6px #787878;
+}</string>
+      </property>
+      <property name="text">
+       <string>搜索</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget_tickets">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>981</width>
+       <height>541</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTableView {
+    background-color: rgb(45, 45, 45);
+    color: #ffffff;            
+    gridline-color:#444444;   
+    border: none;           
+    selection-background-color: #555555; 
+    selection-color: #ffffff;           
+}
+
+QHeaderView::section {
+    background-color: rgb(255, 255, 255);  
+    color: rgb(0, 0, 0);         
+    padding: 3px;               
+    border: none;             
+    border-right: 1px solid #333333; 
+    border-bottom: 1px solid #333333; 
+    font-weight: bold;
+    font-size: 13px;
+}
+
+QTableCornerButton::section {
+    background-color: rgb(255, 255, 255);
+    border: none;
+}
+QTableView QPushButton {
+    background-color: rgb(255, 255, 255); /* 背景设置为白色 */
+    color: rgb(0, 0, 0);                  /* 字体设置为黑色 (防止白字白底看不见) */
+    border: 1px solid #cccccc;            /* 可选：加一个浅灰色边框让按钮更明显 */
+    border-radius: 4px;                   /* 可选：圆角 */
+    padding: 2px 8px;                     /* 可选：内边距 */
+}</string>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Sunken</enum>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+     </property>
+     <column>
+      <property name="text">
+       <string>类型</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>编号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>出发地</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>目的地</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>出发时间</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>到达时间</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>价格（元）</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>可用座位</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>公司</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>操作</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QPushButton" name="home">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>620</y>
+       <width>331</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #606060;
+    border:1px solid white;
+    padding: 8px 16px;
+    color: white;
+    font-size: 14px;
+    box-shadow: inset 2px 2px 4px #484848, 
+                inset -2px -2px 4px #787878;
+	border-radius: 6px;
+}
+
+QPushButton:hover {
+    background-color: #646464;
+}
+
+QPushButton:pressed {
+    background-color: #5c5c5c;
+    box-shadow: inset 3px 3px 6px #404040, 
+                inset -3px -3px 6px #787878;
+}</string>
+     </property>
+     <property name="text">
+      <string>首页</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Deal_2">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>620</y>
+       <width>331</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #606060;
+    border:1px solid white;
+    padding: 8px 16px;
+    color: white;
+    font-size: 14px;
+    box-shadow: inset 2px 2px 4px #484848, 
+                inset -2px -2px 4px #787878;
+	border-radius: 6px;
+}
+
+QPushButton:hover {
+    background-color: #646464;
+}
+
+QPushButton:pressed {
+    background-color: #5c5c5c;
+    box-shadow: inset 3px 3px 6px #404040, 
+                inset -3px -3px 6px #787878;
+}</string>
+     </property>
+     <property name="text">
+      <string>行程</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Single_Center">
+     <property name="geometry">
+      <rect>
+       <x>670</x>
+       <y>620</y>
+       <width>321</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #606060;
+    border: 1px solid white;
+    padding: 8px 16px;
+    color: white;
+    font-size: 14px;
+    box-shadow: inset 2px 2px 4px #484848, 
+                inset -2px -2px 4px #787878;
+	border-radius: 6px;
+}
+
+QPushButton:hover {
+    background-color: #646464;
+}
+
+QPushButton:pressed {
+    background-color: #5c5c5c;
+    box-shadow: inset 3px 3px 6px #404040, 
+                inset -3px -3px 6px #787878;
+}</string>
+     </property>
+     <property name="text">
+      <string>个人中心</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
