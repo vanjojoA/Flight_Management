@@ -1,3 +1,4 @@
+
 #ifndef USERPROFILE_H
 #define USERPROFILE_H
 
@@ -41,3 +42,4 @@ private:
 };
 
 #endif // USERPROFILE_H
+

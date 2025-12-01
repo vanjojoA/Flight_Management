@@ -1,3 +1,4 @@
+
 #include "deal.h"
 #include "ui_deal.h"
 #include "single_center.h"

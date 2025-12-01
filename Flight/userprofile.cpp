@@ -137,3 +137,4 @@ void UserProfile::getData(const QString &userID)
         QMessageBox::warning(this, "错误", "查询用户信息失败：\n" + errorMsg);
     }
 }
+
