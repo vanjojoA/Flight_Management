@@ -44,9 +44,14 @@ template <> constexpr inline auto Deal::qt_create_metaobjectdata<qt_meta_tag_ZN4
         "on_btn_search_clicked",
         "on_btn_reset_clicked",
         "on_Deal_2_clicked",
+        "on_favorite_button_clicked",
         "onBookTicket",
         "refreshTicketList",
-        "showTicketSearchPage"
+        "showTicketSearchPage",
+        "on_tableView_clicked",
+        "QModelIndex",
+        "index",
+        "onAddFavorite"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -58,12 +63,20 @@ template <> constexpr inline auto Deal::qt_create_metaobjectdata<qt_meta_tag_ZN4
         QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'on_Deal_2_clicked'
         QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onBookTicket'
+        // Slot 'on_favorite_button_clicked'
         QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'refreshTicketList'
+        // Slot 'onBookTicket'
         QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'showTicketSearchPage'
+        // Slot 'refreshTicketList'
         QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'showTicketSearchPage'
+        QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_tableView_clicked'
+        QtMocHelpers::SlotData<void(const QModelIndex &)>(10, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 11, 12 },
+        }}),
+        // Slot 'onAddFavorite'
+        QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -91,13 +104,15 @@ void Deal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 1: _t->on_btn_search_clicked(); break;
         case 2: _t->on_btn_reset_clicked(); break;
         case 3: _t->on_Deal_2_clicked(); break;
-        case 4: _t->onBookTicket(); break;
-        case 5: _t->refreshTicketList(); break;
-        case 6: _t->showTicketSearchPage(); break;
+        case 4: _t->on_favorite_button_clicked(); break;
+        case 5: _t->onBookTicket(); break;
+        case 6: _t->refreshTicketList(); break;
+        case 7: _t->showTicketSearchPage(); break;
+        case 8: _t->on_tableView_clicked((*reinterpret_cast< std::add_pointer_t<QModelIndex>>(_a[1]))); break;
+        case 9: _t->onAddFavorite(); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *Deal::metaObject() const
@@ -119,14 +134,14 @@ int Deal::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 10;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 10)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 10;
     }
     return _id;
 }

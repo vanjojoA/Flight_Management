@@ -34,15 +34,15 @@ public:
     QLabel *label_3;
     QLabel *label_4;
     QLabel *label_5;
-    QLineEdit *lineEdit;
+    QLineEdit *label_username;
     QLineEdit *lineEdit_2;
-    QLineEdit *lineEdit_3;
+    QLineEdit *label_jianjie;
     QLineEdit *lineEdit_4;
     QLabel *label_6;
     QFrame *frame_2;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
-    QPushButton *pushButton_5;
+    QPushButton *edit_btn;
     QPushButton *pushButton_4;
     QPushButton *pushButton_6;
     QPushButton *pushButton_2;
@@ -156,6 +156,8 @@ public:
         btn_back = new QPushButton(widget);
         btn_back->setObjectName("btn_back");
         btn_back->setGeometry(QRect(880, 5, 80, 30));
+        btn_back->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);"));
         frame = new QFrame(UserProfile);
         frame->setObjectName("frame");
         frame->setGeometry(QRect(10, 60, 981, 181));
@@ -187,11 +189,11 @@ public:
 
         formLayout->setWidget(1, QFormLayout::ItemRole::LabelRole, label_5);
 
-        lineEdit = new QLineEdit(formLayoutWidget);
-        lineEdit->setObjectName("lineEdit");
-        lineEdit->setReadOnly(true);
+        label_username = new QLineEdit(formLayoutWidget);
+        label_username->setObjectName("label_username");
+        label_username->setReadOnly(true);
 
-        formLayout->setWidget(0, QFormLayout::ItemRole::FieldRole, lineEdit);
+        formLayout->setWidget(0, QFormLayout::ItemRole::FieldRole, label_username);
 
         lineEdit_2 = new QLineEdit(formLayoutWidget);
         lineEdit_2->setObjectName("lineEdit_2");
@@ -199,11 +201,11 @@ public:
 
         formLayout->setWidget(1, QFormLayout::ItemRole::FieldRole, lineEdit_2);
 
-        lineEdit_3 = new QLineEdit(formLayoutWidget);
-        lineEdit_3->setObjectName("lineEdit_3");
-        lineEdit_3->setReadOnly(true);
+        label_jianjie = new QLineEdit(formLayoutWidget);
+        label_jianjie->setObjectName("label_jianjie");
+        label_jianjie->setReadOnly(true);
 
-        formLayout->setWidget(2, QFormLayout::ItemRole::FieldRole, lineEdit_3);
+        formLayout->setWidget(2, QFormLayout::ItemRole::FieldRole, label_jianjie);
 
         lineEdit_4 = new QLineEdit(formLayoutWidget);
         lineEdit_4->setObjectName("lineEdit_4");
@@ -228,10 +230,10 @@ public:
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        pushButton_5 = new QPushButton(verticalLayoutWidget);
-        pushButton_5->setObjectName("pushButton_5");
+        edit_btn = new QPushButton(verticalLayoutWidget);
+        edit_btn->setObjectName("edit_btn");
 
-        verticalLayout->addWidget(pushButton_5);
+        verticalLayout->addWidget(edit_btn);
 
         pushButton_4 = new QPushButton(verticalLayoutWidget);
         pushButton_4->setObjectName("pushButton_4");
@@ -285,7 +287,7 @@ public:
         label_4->setText(QCoreApplication::translate("UserProfile", "\347\256\200\344\273\213\357\274\232", nullptr));
         label_5->setText(QCoreApplication::translate("UserProfile", "\350\264\246\345\217\267\357\274\232", nullptr));
         label_6->setText(QCoreApplication::translate("UserProfile", "\351\222\261\345\214\205\344\275\231\351\242\235\357\274\232", nullptr));
-        pushButton_5->setText(QCoreApplication::translate("UserProfile", "\347\274\226\350\276\221\344\270\252\344\272\272\344\277\241\346\201\257", nullptr));
+        edit_btn->setText(QCoreApplication::translate("UserProfile", "\347\274\226\350\276\221\344\270\252\344\272\272\344\277\241\346\201\257", nullptr));
         pushButton_4->setText(QCoreApplication::translate("UserProfile", "\346\210\221\347\232\204\350\256\242\345\215\225", nullptr));
         pushButton_6->setText(QCoreApplication::translate("UserProfile", "\345\205\205\345\200\274", nullptr));
         pushButton_2->setText(QCoreApplication::translate("UserProfile", "\346\224\266\350\227\217", nullptr));

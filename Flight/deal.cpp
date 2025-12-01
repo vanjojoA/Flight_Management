@@ -3,6 +3,7 @@
 #include "single_center.h"
 #include "order_dialog.h"
 #include "userprofile.h"
+#include "favorite_dialog.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -45,6 +46,10 @@ Deal::Deal(const QString &username, QWidget *parent)
     m_userProfilePage = new UserProfile(this);
     ui->stackedWidget->addWidget(m_userProfilePage);
 
+    m_favoriteDialogPage = new favorite_dialog(currentUsername,this);
+    ui->stackedWidget->addWidget(m_favoriteDialogPage);
+
+    connect(m_favoriteDialogPage, &favorite_dialog::backRequested, this, &Deal::showTicketSearchPage); // <--- 连接返回信号
     connect(m_userProfilePage, &UserProfile::backRequested, this, &Deal::showTicketSearchPage);
 
     connect(m_userProfilePage, &UserProfile::myOrdersRequested, this, [=](){
@@ -58,6 +63,10 @@ Deal::Deal(const QString &username, QWidget *parent)
         loginWindow->show();
         this->close();
     });
+    connect(m_userProfilePage, &UserProfile::myFavoritesRequested, this, [=](){
+        m_favoriteDialogPage->refreshFavoriteList();
+        ui->stackedWidget->setCurrentWidget(m_favoriteDialogPage);
+    });
     ui->stackedWidget->setCurrentWidget(ui->page_tickets);
 
 }
@@ -70,8 +79,8 @@ Deal::~Deal()
 void Deal::initTable()
 {
     QStringList headers;
-    headers << "类型" << "编号" << "出发地" << "目的地" << "出发时间" 
-            << "到达时间" << "价格(元)" << "可用座位" << "公司" << "操作";
+    headers << "类型" << "编号" << "出发地" << "目的地" << "出发时间"
+            << "到达时间" << "价格(元)" << "可用座位" << "公司" << "操作"<<"收藏";
     ui->tableWidget_tickets->setHorizontalHeaderLabels(headers);
     ui->tableWidget_tickets->horizontalHeader()->setStretchLastSection(true);
     ui->tableWidget_tickets->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -90,7 +99,24 @@ void Deal::searchTickets()
         QMessageBox::warning(this, "错误", "数据库未连接！");
         return;
     }
+    QList<int> favoriteTicketIds;
+    if (!currentUsername.isEmpty()) {
+        QSqlQuery userQuery;
+        userQuery.prepare("SELECT UserID FROM users WHERE Username = :username");
+        userQuery.bindValue(":username", currentUsername);
+        if (userQuery.exec() && userQuery.next()) {
+            int currentUserId = userQuery.value(0).toInt();
 
+            QSqlQuery favQuery;
+            favQuery.prepare("SELECT TicketID FROM favorites WHERE UserID = :uid");
+            favQuery.bindValue(":uid", currentUserId);
+            if (favQuery.exec()) {
+                while(favQuery.next()) {
+                    favoriteTicketIds.append(favQuery.value(0).toInt());
+                }
+            }
+        }
+    }
     QSqlQuery query;
     QString sql = "SELECT TicketID, TicketType, TicketNo, DepartureCity, ArrivalCity, "
                   "DepartureTime, ArrivalTime, Price, AvailableSeats, Company "
@@ -158,6 +184,15 @@ void Deal::searchTickets()
         connect(btnBook, &QPushButton::clicked, this, &Deal::onBookTicket);
         ui->tableWidget_tickets->setCellWidget(row, 9, btnBook);
 
+        //添加收藏按钮
+        bool isFavorited = favoriteTicketIds.contains(ticketId);
+        QPushButton * btnFav = new QPushButton(isFavorited ? "已收藏" : "收藏");
+
+        btnFav->setProperty("ticketId",ticketId);
+        btnFav->setEnabled(!isFavorited); // 如果已收藏，按钮设为不可用
+
+        connect(btnFav,&QPushButton::clicked,this,&::Deal::onAddFavorite);
+        ui->tableWidget_tickets->setCellWidget(row, 10, btnFav);
         row++;
     }
 }
@@ -231,15 +266,60 @@ void Deal::on_Deal_2_clicked()
         return;
     }
     m_personalCenterPage->refreshOrderList();
-    // 这里可以打开行程页面，暂时使用个人中心
-    // Single_Center *center = new Single_Center(currentUsername,this);
-    // center->setAttribute(Qt::WA_DeleteOnClose);
-    // center->show();
     ui->stackedWidget->setCurrentWidget(m_personalCenterPage);
 
 }
+void Deal::on_favorite_button_clicked(){
+    if (currentUsername.isEmpty()) {
+        QMessageBox::warning(this, "提示", "请先登录！");
+        return;
+    }
+    m_favoriteDialogPage->refreshFavoriteList();
+    ui->stackedWidget->setCurrentWidget(m_favoriteDialogPage);
+}
 void Deal::showTicketSearchPage()
 {
+    searchTickets();
     ui->stackedWidget->setCurrentWidget(ui->page_tickets);
 }
+void Deal::on_tableView_clicked(const QModelIndex &index)
+{
 
+}
+void Deal::onAddFavorite(){
+    if (currentUsername.isEmpty()) {
+        QMessageBox::warning(this, "提示", "请先登录！");
+        return;
+    }
+    QPushButton *btn = qobject_cast<QPushButton*>(sender());
+    if (!btn) return;
+    int ticketId = btn->property("ticketId").toInt();
+
+    QSqlQuery query;
+    query.prepare("SELECT UserID FROM users WHERE Username = ?");
+    query.addBindValue(currentUsername);
+    if (!query.exec() || !query.next()) {
+        QMessageBox::warning(this, "错误", "获取用户信息失败！");
+        return;
+    }
+    int userId = query.value(0).toInt();
+
+    QSqlQuery insertQuery;
+    insertQuery.prepare("INSERT INTO favorites (UserID, TicketID) VALUES (?, ?)");
+    insertQuery.addBindValue(userId);
+    insertQuery.addBindValue(ticketId);
+
+    if (insertQuery.exec()) {
+        QMessageBox::information(this, "成功", "已添加到收藏夹！");
+
+        btn->setEnabled(false);
+        btn->setText("已收藏");
+    } else {
+        if (insertQuery.lastError().text().contains("Duplicate entry") ||
+            insertQuery.lastError().text().contains("UNIQUE")) {
+            QMessageBox::information(this, "提示", "您已经收藏过该行程了！");
+        } else {
+            QMessageBox::critical(this, "错误", "收藏失败：" + insertQuery.lastError().text());
+        }
+    }
+}

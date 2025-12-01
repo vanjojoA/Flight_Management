@@ -43,6 +43,7 @@ public:
     QPushButton *home;
     QPushButton *Deal_2;
     QPushButton *Single_Center;
+    QPushButton *favorite_button;
 
     void setupUi(QWidget *Deal)
     {
@@ -181,8 +182,8 @@ public:
 "                inset -3px -3px 6px #787878;\n"
 "}"));
         tableWidget_tickets = new QTableWidget(page_tickets);
-        if (tableWidget_tickets->columnCount() < 10)
-            tableWidget_tickets->setColumnCount(10);
+        if (tableWidget_tickets->columnCount() < 11)
+            tableWidget_tickets->setColumnCount(11);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tableWidget_tickets->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
@@ -203,6 +204,8 @@ public:
         tableWidget_tickets->setHorizontalHeaderItem(8, __qtablewidgetitem8);
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tableWidget_tickets->setHorizontalHeaderItem(9, __qtablewidgetitem9);
+        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
+        tableWidget_tickets->setHorizontalHeaderItem(10, __qtablewidgetitem10);
         tableWidget_tickets->setObjectName("tableWidget_tickets");
         tableWidget_tickets->setGeometry(QRect(10, 80, 981, 541));
         tableWidget_tickets->setAutoFillBackground(false);
@@ -243,7 +246,7 @@ public:
         tableWidget_tickets->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
         home = new QPushButton(page_tickets);
         home->setObjectName("home");
-        home->setGeometry(QRect(10, 620, 331, 71));
+        home->setGeometry(QRect(10, 620, 251, 71));
         home->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #606060;\n"
 "    border:1px solid white;\n"
@@ -266,7 +269,7 @@ public:
 "}"));
         Deal_2 = new QPushButton(page_tickets);
         Deal_2->setObjectName("Deal_2");
-        Deal_2->setGeometry(QRect(340, 620, 331, 71));
+        Deal_2->setGeometry(QRect(260, 620, 251, 71));
         Deal_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #606060;\n"
 "    border:1px solid white;\n"
@@ -289,10 +292,33 @@ public:
 "}"));
         Single_Center = new QPushButton(page_tickets);
         Single_Center->setObjectName("Single_Center");
-        Single_Center->setGeometry(QRect(670, 620, 321, 71));
+        Single_Center->setGeometry(QRect(750, 620, 241, 71));
         Single_Center->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #606060;\n"
 "    border: 1px solid white;\n"
+"    padding: 8px 16px;\n"
+"    color: white;\n"
+"    font-size: 14px;\n"
+"    box-shadow: inset 2px 2px 4px #484848, \n"
+"                inset -2px -2px 4px #787878;\n"
+"	border-radius: 6px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #646464;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #5c5c5c;\n"
+"    box-shadow: inset 3px 3px 6px #404040, \n"
+"                inset -3px -3px 6px #787878;\n"
+"}"));
+        favorite_button = new QPushButton(page_tickets);
+        favorite_button->setObjectName("favorite_button");
+        favorite_button->setGeometry(QRect(510, 620, 241, 71));
+        favorite_button->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: #606060;\n"
+"    border:1px solid white;\n"
 "    padding: 8px 16px;\n"
 "    color: white;\n"
 "    font-size: 14px;\n"
@@ -356,9 +382,12 @@ public:
         ___qtablewidgetitem8->setText(QCoreApplication::translate("Deal", "\345\205\254\345\217\270", nullptr));
         QTableWidgetItem *___qtablewidgetitem9 = tableWidget_tickets->horizontalHeaderItem(9);
         ___qtablewidgetitem9->setText(QCoreApplication::translate("Deal", "\346\223\215\344\275\234", nullptr));
+        QTableWidgetItem *___qtablewidgetitem10 = tableWidget_tickets->horizontalHeaderItem(10);
+        ___qtablewidgetitem10->setText(QCoreApplication::translate("Deal", "\346\224\266\350\227\217", nullptr));
         home->setText(QCoreApplication::translate("Deal", "\351\246\226\351\241\265", nullptr));
         Deal_2->setText(QCoreApplication::translate("Deal", "\350\241\214\347\250\213", nullptr));
         Single_Center->setText(QCoreApplication::translate("Deal", "\344\270\252\344\272\272\344\270\255\345\277\203", nullptr));
+        favorite_button->setText(QCoreApplication::translate("Deal", "\346\224\266\350\227\217", nullptr));
     } // retranslateUi
 
 };

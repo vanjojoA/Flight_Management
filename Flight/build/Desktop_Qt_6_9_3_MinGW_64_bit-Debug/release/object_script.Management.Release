@@ -1,5 +1,7 @@
 release/MainWindow.o
 release/deal.o
+release/edit_info.o
+release/favorite_dialog.o
 release/main.o
 release/sign_in.o
 release/single_center.o
@@ -7,6 +9,8 @@ release/order_dialog.o
 release/userprofile.o
 release/moc_MainWindow.o
 release/moc_deal.o
+release/moc_edit_info.o
+release/moc_favorite_dialog.o
 release/moc_sign_in.o
 release/moc_single_center.o
 release/moc_order_dialog.o

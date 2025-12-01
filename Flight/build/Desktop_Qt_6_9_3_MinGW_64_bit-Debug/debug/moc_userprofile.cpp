@@ -43,11 +43,14 @@ template <> constexpr inline auto UserProfile::qt_create_metaobjectdata<qt_meta_
         "",
         "myOrdersRequested",
         "logoutRequested",
+        "myFavoritesRequested",
         "on_btn_back_clicked",
+        "on_pushButton_2_clicked",
         "on_pushButton_4_clicked",
         "on_pushButton_8_clicked",
         "on_pushButton_7_clicked",
-        "on_pushButton_9_clicked"
+        "on_pushButton_9_clicked",
+        "on_edit_btn_clicked"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -57,16 +60,22 @@ template <> constexpr inline auto UserProfile::qt_create_metaobjectdata<qt_meta_
         QtMocHelpers::SignalData<void()>(3, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'logoutRequested'
         QtMocHelpers::SignalData<void()>(4, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'myFavoritesRequested'
+        QtMocHelpers::SignalData<void()>(5, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'on_btn_back_clicked'
-        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_pushButton_4_clicked'
         QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_pushButton_8_clicked'
+        // Slot 'on_pushButton_2_clicked'
         QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_pushButton_7_clicked'
+        // Slot 'on_pushButton_4_clicked'
         QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_pushButton_9_clicked'
+        // Slot 'on_pushButton_8_clicked'
         QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_pushButton_7_clicked'
+        QtMocHelpers::SlotData<void()>(10, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_pushButton_9_clicked'
+        QtMocHelpers::SlotData<void()>(11, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_edit_btn_clicked'
+        QtMocHelpers::SlotData<void()>(12, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -93,11 +102,14 @@ void UserProfile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 0: _t->backRequested(); break;
         case 1: _t->myOrdersRequested(); break;
         case 2: _t->logoutRequested(); break;
-        case 3: _t->on_btn_back_clicked(); break;
-        case 4: _t->on_pushButton_4_clicked(); break;
-        case 5: _t->on_pushButton_8_clicked(); break;
-        case 6: _t->on_pushButton_7_clicked(); break;
-        case 7: _t->on_pushButton_9_clicked(); break;
+        case 3: _t->myFavoritesRequested(); break;
+        case 4: _t->on_btn_back_clicked(); break;
+        case 5: _t->on_pushButton_2_clicked(); break;
+        case 6: _t->on_pushButton_4_clicked(); break;
+        case 7: _t->on_pushButton_8_clicked(); break;
+        case 8: _t->on_pushButton_7_clicked(); break;
+        case 9: _t->on_pushButton_9_clicked(); break;
+        case 10: _t->on_edit_btn_clicked(); break;
         default: ;
         }
     }
@@ -107,6 +119,8 @@ void UserProfile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         if (QtMocHelpers::indexOfMethod<void (UserProfile::*)()>(_a, &UserProfile::myOrdersRequested, 1))
             return;
         if (QtMocHelpers::indexOfMethod<void (UserProfile::*)()>(_a, &UserProfile::logoutRequested, 2))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (UserProfile::*)()>(_a, &UserProfile::myFavoritesRequested, 3))
             return;
     }
 }
@@ -130,14 +144,14 @@ int UserProfile::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 11;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        _id -= 11;
     }
     return _id;
 }
@@ -158,5 +172,11 @@ void UserProfile::myOrdersRequested()
 void UserProfile::logoutRequested()
 {
     QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+}
+
+// SIGNAL 3
+void UserProfile::myFavoritesRequested()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
 }
 QT_WARNING_POP

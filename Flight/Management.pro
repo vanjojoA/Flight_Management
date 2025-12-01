@@ -11,6 +11,8 @@ CONFIG += c++17
 SOURCES += \
     MainWindow.cpp \
     deal.cpp \
+    edit_info.cpp \
+    favorite_dialog.cpp \
     main.cpp \
     sign_in.cpp \
     single_center.cpp \
@@ -20,6 +22,8 @@ SOURCES += \
 HEADERS += \
     MainWindow.h \
     deal.h \
+    edit_info.h \
+    favorite_dialog.h \
     sign_in.h \
     single_center.h \
     order_dialog.h \
@@ -28,6 +32,8 @@ HEADERS += \
 FORMS += \
     MainWindow.ui \
     deal.ui \
+    edit_info.ui \
+    favorite_dialog.ui \
     sign_in.ui \
     single_center.ui \
     order_dialog.ui \

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>edit_info</class>
+ <widget class="QDialog" name="edit_info">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>634</width>
+    <height>361</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>编辑个人信息</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* ================= 全局窗口设置 ================= */
+QDialog {
+    background-color: #ffffff;   /* 白底 */
+    color: #333333;              /* 深灰色字体 (比纯黑更柔和) */
+    font-family: &quot;Microsoft YaHei&quot;, &quot;Segoe UI&quot;, sans-serif;
+}
+
+/* ================= 标签 (Label) 样式 ================= */
+QLabel {
+    color: #333333;              /* 标签文字颜色 */
+    font-size: 14px;
+    font-weight: bold;           /* 加粗，提升辨识度 */
+    background: transparent;     /* 背景透明 */
+}
+
+/* ================= 输入框 (LineEdit) 样式 ================= */
+QLineEdit {
+    background-color: #f7f7f7;   /* 极浅灰色背景，区分白色底板 */
+    border: 1px solid #cccccc;   /* 浅灰色边框 */
+    border-radius: 4px;          /* 4px 圆角 */
+    color: #000000;              /* 输入内容为纯黑 */
+    padding: 5px 8px;            /* 增加一点内边距，文字不拥挤 */
+    font-size: 14px;
+}
+
+/* 输入框获得焦点（鼠标点进去）时的样式 */
+QLineEdit:focus {
+    background-color: #ffffff;   /* 选中时背景变白 */
+    border: 1px solid #0078d7;   /* 边框变为亮蓝色 */
+}
+
+/* 针对只读输入框（如原用户名）的样式 */
+QLineEdit[readOnly=&quot;true&quot;] {
+    background-color: #eeeeee;   /* 灰色背景表示不可编辑 */
+    color: #888888;              /* 文字变淡 */
+    border: 1px solid #dddddd;
+}
+
+/* ================= 按钮 (PushButton) 样式 ================= */
+QPushButton {
+    background-color: #ffffff;   /* 按钮白底 */
+    border: 1px solid #dcdcdc;   /* 灰色细边框 */
+    border-bottom: 2px solid #b0b0b0; /* 底部加粗，模拟立体感 */
+    border-radius: 6px;          /* 圆角按钮 */
+    color: #333333;              /* 按钮文字 */
+    font-size: 14px;
+    padding: 6px 16px;
+}
+
+/* 鼠标悬停在按钮上 */
+QPushButton:hover {
+    background-color: #f0f8ff;   /* 微微变蓝的背景 */
+    border-color: #0078d7;       /* 边框变蓝 */
+    color: #0078d7;              /* 文字变蓝 */
+}
+
+/* 鼠标按下按钮 */
+QPushButton:pressed {
+    background-color: #e0e0e0;   /* 按下背景变深 */
+    border-top: 2px solid #b0b0b0; /* 模拟按压凹陷效果 */
+    border-bottom: none;         /* 去掉底部立体边框 */
+    padding-top: 8px;            /* 文字下移，产生按压动效 */
+    padding-bottom: 4px;
+}
+
+/* 针对“确认/取消”按钮盒子的特殊微调（可选） */
+QDialogButtonBox QPushButton {
+    min-width: 60px;             /* 保证按钮不要太窄 */
+}</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>290</y>
+     <width>211</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Orientation::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>50</y>
+     <width>111</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>设置你的照片：</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>50</y>
+     <width>191</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>选择本地图片</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>100</y>
+     <width>69</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>原用户名：</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="old_name">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>100</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="new_name">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>150</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>200</y>
+     <width>69</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>简介：</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="new_jianjie">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>200</y>
+     <width>191</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_newname">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>150</y>
+     <width>69</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>新用户名：</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>edit_info</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>edit_info</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

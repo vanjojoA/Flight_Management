@@ -1,5 +1,7 @@
 debug/MainWindow.o
 debug/deal.o
+debug/edit_info.o
+debug/favorite_dialog.o
 debug/main.o
 debug/sign_in.o
 debug/single_center.o
@@ -7,6 +9,8 @@ debug/order_dialog.o
 debug/userprofile.o
 debug/moc_MainWindow.o
 debug/moc_deal.o
+debug/moc_edit_info.o
+debug/moc_favorite_dialog.o
 debug/moc_sign_in.o
 debug/moc_single_center.o
 debug/moc_order_dialog.o
