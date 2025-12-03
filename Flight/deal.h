@@ -25,14 +25,21 @@ private slots:
     void onBookTicket();
     void refreshTicketList();
     void showTicketSearchPage();
+    // void onPrevPage();  // 上一页
+    // void onNextPage();  //下一页
 private:
     void initTable();
     void searchTickets();
+
     QString currentUserID;
 
     Ui::Deal *ui;
     Single_Center *m_personalCenterPage;
     UserProfile *m_userProfilePage;
+
+    int currentPage = 1;    // 当前页码（默认第一页）
+    int pageSize = 20;      // 每页显示 20 条（可调整）
+    int totalCount = 0;     // 总数据条数（用于计算总页数）
 };
 
 #endif // DEAL_H

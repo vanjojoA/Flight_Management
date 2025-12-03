@@ -346,11 +346,6 @@ QTableView QPushButton {
      </property>
      <column>
       <property name="text">
-       <string>类型</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
        <string>编号</string>
       </property>
      </column>
