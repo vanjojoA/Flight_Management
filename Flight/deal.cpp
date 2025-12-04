@@ -82,11 +82,9 @@ Deal::Deal(const QString &userID, QWidget *parent)
         loginWindow->show();
         this->close();
     });
-<<<<<<< HEAD
-=======
     connect(m_personalCenterPage, &Single_Center::dataChanged, this, [=](){
         // 1. 刷新票务列表（更新座位数）
-        this->searchTickets();
+        this->searchTickets(currentPage);
 
         // 2. 刷新个人中心数据（更新余额）
         if (m_userProfilePage) {
@@ -94,7 +92,6 @@ Deal::Deal(const QString &userID, QWidget *parent)
         }
     });
     ui->stackedWidget->setCurrentWidget(ui->page_tickets);
->>>>>>> 5fafcaf50ec0cc9da32cb6bf7688f8127dc710c2
 
     initPagination();
     ui->stackedWidget->setCurrentWidget(ui->page_tickets);
@@ -132,14 +129,13 @@ int Deal::getTotalPage()
     QString from = ui->lineEdit_from->text().trimmed();
     QString to = ui->lineEdit_to->text().trimmed();
     QDate date = ui->dateEdit->date();
-<<<<<<< HEAD
     QString startTime = date.toString("yyyy-MM-dd 00:00:00");
-=======
+
     QString type = ui->comboBox_type->currentText();
 
     if (!QSqlDatabase::database().isOpen()) {
         QMessageBox::warning(this, "错误", "数据库未连接！");
-        return;
+        return 0;
     }
     QList<int> favoriteTicketIds;
     if (!currentUserID.isEmpty()) {
@@ -153,7 +149,6 @@ int Deal::getTotalPage()
         }
         favQuery.finish();
     }
->>>>>>> 5fafcaf50ec0cc9da32cb6bf7688f8127dc710c2
 
     // 检查数据库连接
     QSqlDatabase db = QSqlDatabase::database();

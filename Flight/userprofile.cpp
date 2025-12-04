@@ -198,8 +198,7 @@ void UserProfile::on_btn_favorites_clicked()
 {
     emit myFavoritesRequested();
 }
-<<<<<<< HEAD
-=======
+
 void UserProfile::on_btn_recharge_clicked(){
     if (payWindow == nullptr) {
         payWindow = new Pay();
@@ -219,4 +218,3 @@ void UserProfile::on_btn_recharge_clicked(){
     payWindow->raise();
     payWindow->activateWindow();
 }
->>>>>>> 5fafcaf50ec0cc9da32cb6bf7688f8127dc710c2
