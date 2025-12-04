@@ -185,14 +185,17 @@ void Single_Center::onCancelOrder()
 
     // 获取订单信息
     QSqlQuery orderQuery(db);
-    orderQuery.prepare("SELECT TicketID, TicketCount FROM orders WHERE OrderID = ?");
+    orderQuery.prepare("SELECT TicketID, TicketCount, TotalPrice, UserID FROM orders WHERE OrderID = ?");
     orderQuery.addBindValue(orderId);
+
     if (!orderQuery.exec() || !orderQuery.next()) {
         QMessageBox::warning(this, "错误", "获取订单信息失败！");
         return;
     }
     int ticketId = orderQuery.value(0).toInt();
     int ticketCount = orderQuery.value(1).toInt();
+    double refundAmount = orderQuery.value(2).toDouble();
+    int userId = orderQuery.value(3).toInt();
     orderQuery.finish();
     // 开始事务
     db.transaction();
@@ -219,10 +222,21 @@ void Single_Center::onCancelOrder()
             return;
         }
 
+        QSqlQuery refundQuery(db);
+        refundQuery.prepare("UPDATE users SET Balance = Balance + ? WHERE UserID = ?");
+        refundQuery.addBindValue(refundAmount);
+        refundQuery.addBindValue(userId);
+        if (!refundQuery.exec()) throw refundQuery.lastError();
         // 提交事务
-        db.commit();
-        QMessageBox::information(this, "成功", "订单已取消！订单金额已按原路返回！");
-        refreshOrderList();
+        if (!db.commit()) {
+            db.rollback(); // 提交失败则回滚
+            QMessageBox::critical(this, "错误", "提交事务失败：" + db.lastError().text());
+            return;
+        }else {
+            QMessageBox::information(this, "成功", "订单已取消！订单金额已按原路返回！");
+            refreshOrderList();
+            emit dataChanged(); // 发射信号通知外部刷新
+        }
     } catch (...) {
         db.rollback();
         QMessageBox::critical(this, "错误", "取消订单过程中发生错误！");

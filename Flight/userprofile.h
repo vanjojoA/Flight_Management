@@ -2,7 +2,7 @@
 #define USERPROFILE_H
 
 #include <QWidget>
-
+#include"pay.h"
 namespace Ui {
 class UserProfile;
 }
@@ -15,7 +15,6 @@ public:
     QString userID;
     QString username;
     explicit UserProfile(QWidget *parent = nullptr);
-    // 修复：修改构造函数参数，去掉多余的 username 参数，匹配 Deal::Deal 中的调用
     explicit UserProfile(const QString &userID, QWidget *parent = nullptr);
     ~UserProfile();
 
@@ -37,10 +36,12 @@ private slots:
     void on_pushButton_10_clicked();//增加乘客
     void on_pushButton_5_clicked();//编辑个人资料
     void on_btn_favorites_clicked();//收藏
+    void on_btn_recharge_clicked();//充值
 
 private:
     Ui::UserProfile *ui;
     QString currentUsername;
+    Pay* payWindow=nullptr;
 };
 
 #endif // USERPROFILE_H

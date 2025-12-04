@@ -299,7 +299,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="btn_recharge">
        <property name="text">
         <string>充值</string>
        </property>

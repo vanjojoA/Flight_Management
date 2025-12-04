@@ -19,17 +19,16 @@ OrderDialog::OrderDialog(int ticketId, int userId, QWidget *parent)
     , ticketId(ticketId)
     , userId(userId)
     , ticketPrice(0.0)
+    , userBalance(0.0)
 {
     ui->setupUi(this);
     setWindowTitle("填写订单信息");
     setModal(true);
     loadTicketInfo();
+    loadUserBalance();
     ui->spinBox_count->setMinimum(1);
     ui->spinBox_count->setMaximum(10);
     ui->spinBox_count->setValue(1);
-
-    connect(ui->spinBox_count, QOverload<int>::of(&QSpinBox::valueChanged),
-            this, &OrderDialog::on_spinBox_count_valueChanged);
 }
 
 void OrderDialog::loadTicketInfo()
@@ -89,6 +88,13 @@ void OrderDialog::calculateTotal()
     int count = ui->spinBox_count->value();
     double total = ticketPrice * count;
     ui->label_total->setText(QString::number(total, 'f', 2) + " 元");
+    if(ui->label_balance){
+        if(userBalance<total){
+            ui->label_balance->setStyleSheet("color: red; font-weight: bold;");
+        }else{
+            ui->label_balance->setStyleSheet("color: green; font-weight: bold;");
+        }
+    }
 }
 
 //检测时间是否冲突
@@ -235,7 +241,16 @@ void OrderDialog::on_btn_confirm_clicked()
     QString passengerID = ui->lineEdit_id->text().trimmed();
     QString contactPhone = ui->lineEdit_phone->text().trimmed();
     int count = ui->spinBox_count->value();
-
+    //检测金额是否超出余额
+    loadUserBalance();
+    double TotalCost=ticketPrice*count;
+    if(TotalCost>userBalance){
+        QMessageBox::critical(this, "支付失败",
+                              QString("您的余额不足！\n当前余额: ¥%1\n订单金额: ¥%2\n请先充值。")
+                                  .arg(QString::number(userBalance, 'f', 2))
+                                  .arg(QString::number(TotalCost, 'f', 2)));
+        return;
+    }
     if (passengerName.isEmpty()) {
         QMessageBox::warning(this, "提示", "请输入乘客姓名！");
         return;
@@ -261,7 +276,7 @@ void OrderDialog::on_btn_confirm_clicked()
     if (checkTimeConflict(passengerID, ticketId)) {
         QString conflictDetails = getConflictDetails(passengerID, ticketId);
 
-        QString message = QString("检测到行程时间冲突！\n\n乘客：%1 (身份证：%2)\n\n").arg(passengerName).arg(passengerID);
+        QString message = QString("检测到行程时间冲突！\n\n乘客：%1 (身份证：%2)\n\n").arg(passengerName,passengerID);
 
         if (!conflictDetails.isEmpty()) {
             message += QString("冲突的行程：\n%1\n\n").arg(conflictDetails);
@@ -288,7 +303,6 @@ void OrderDialog::on_btn_confirm_clicked()
 
     // 检查可用座位数
     QSqlDatabase db = QSqlDatabase::database();
-    // 修复：删除重复声明
     QSqlQuery checkQuery(db);
     checkQuery.prepare("SELECT AvailableSeats FROM tickets WHERE TicketID = ?");
     checkQuery.addBindValue(ticketId);
@@ -311,7 +325,6 @@ void OrderDialog::on_btn_confirm_clicked()
 
     try {
         // 插入订单
-        // 修复：删除重复声明
         QSqlQuery insertQuery(db);
         insertQuery.prepare("INSERT INTO orders (UserID, TicketID, OrderNo, PassengerName, "
                             "PassengerIDCard, ContactPhone, TicketCount, TotalPrice, OrderStatus) "
@@ -332,7 +345,6 @@ void OrderDialog::on_btn_confirm_clicked()
         }
 
         // 更新票务可用座位数
-        // 修复：删除重复声明
         QSqlQuery updateQuery(db);
         updateQuery.prepare("UPDATE tickets SET AvailableSeats = AvailableSeats - ? WHERE TicketID = ?");
         updateQuery.addBindValue(count);
@@ -342,6 +354,14 @@ void OrderDialog::on_btn_confirm_clicked()
             db.rollback();
             QMessageBox::critical(this, "错误", "更新座位失败：" + updateQuery.lastError().text());
             return;
+        }
+
+        QSqlQuery deductQuery(db);
+        deductQuery.prepare("UPDATE users SET Balance = Balance - ? WHERE UserID = ?");
+        deductQuery.addBindValue(TotalCost);
+        deductQuery.addBindValue(userId);
+        if (!deductQuery.exec()) {
+            throw deductQuery.lastError(); // 抛出异常触发回滚
         }
 
         // 提交事务
@@ -357,4 +377,28 @@ void OrderDialog::on_btn_confirm_clicked()
 void OrderDialog::on_btn_cancel_clicked()
 {
     reject();
+}
+void OrderDialog::loadUserBalance()
+{
+    QSqlDatabase db = QSqlDatabase::database();
+    if (!db.isOpen()) return;
+
+    QSqlQuery query;
+    query.prepare("SELECT Balance FROM users WHERE UserID = ?");
+    query.addBindValue(userId);
+
+    if (query.exec() && query.next()) {
+        userBalance = query.value(0).toDouble();
+        if (ui->label_balance) {
+            ui->label_balance->setText(QString("当前余额: ¥ %1").arg(QString::number(userBalance, 'f', 2)));
+            double currentTotal = ticketPrice * ui->spinBox_count->value();
+            if (userBalance < currentTotal) {
+                ui->label_balance->setStyleSheet("color: red; font-weight: bold;");
+            } else {
+                ui->label_balance->setStyleSheet("color: green; font-weight: bold;");
+            }
+        }
+    } else {
+        qDebug() << "查询余额失败:" << query.lastError().text();
+    }
 }

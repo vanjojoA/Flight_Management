@@ -82,6 +82,19 @@ Deal::Deal(const QString &userID, QWidget *parent)
         loginWindow->show();
         this->close();
     });
+<<<<<<< HEAD
+=======
+    connect(m_personalCenterPage, &Single_Center::dataChanged, this, [=](){
+        // 1. 刷新票务列表（更新座位数）
+        this->searchTickets();
+
+        // 2. 刷新个人中心数据（更新余额）
+        if (m_userProfilePage) {
+            m_userProfilePage->getData(currentUserID);
+        }
+    });
+    ui->stackedWidget->setCurrentWidget(ui->page_tickets);
+>>>>>>> 5fafcaf50ec0cc9da32cb6bf7688f8127dc710c2
 
     initPagination();
     ui->stackedWidget->setCurrentWidget(ui->page_tickets);
@@ -119,7 +132,28 @@ int Deal::getTotalPage()
     QString from = ui->lineEdit_from->text().trimmed();
     QString to = ui->lineEdit_to->text().trimmed();
     QDate date = ui->dateEdit->date();
+<<<<<<< HEAD
     QString startTime = date.toString("yyyy-MM-dd 00:00:00");
+=======
+    QString type = ui->comboBox_type->currentText();
+
+    if (!QSqlDatabase::database().isOpen()) {
+        QMessageBox::warning(this, "错误", "数据库未连接！");
+        return;
+    }
+    QList<int> favoriteTicketIds;
+    if (!currentUserID.isEmpty()) {
+        QSqlQuery favQuery;
+        favQuery.prepare("SELECT TicketID FROM favorites WHERE UserID = :uid");
+        favQuery.bindValue(":uid", currentUserID);
+        if (favQuery.exec()) {
+            while(favQuery.next()) {
+                favoriteTicketIds.append(favQuery.value(0).toInt());
+            }
+        }
+        favQuery.finish();
+    }
+>>>>>>> 5fafcaf50ec0cc9da32cb6bf7688f8127dc710c2
 
     // 检查数据库连接
     QSqlDatabase db = QSqlDatabase::database();
@@ -432,21 +466,12 @@ void Deal::onBookTicket()
 
     int ticketId = btn->property("ticketId").toInt();
     
-    // 获取当前用户ID
-    //QSqlQuery query;
-    //query.prepare("SELECT UserID FROM users WHERE Username = ?");
-    //query.addBindValue(currentUserID);
-    //if (!query.exec() || !query.next()) {
-    //    QMessageBox::warning(this, "错误", "获取用户信息失败！");
-    //    return;
-    //}
     int userId = currentUserID.toInt();
 
     // 打开订单对话框
     OrderDialog *dialog = new OrderDialog(ticketId, userId, this);
     if (dialog->exec() == QDialog::Accepted) {
         refreshTicketList();
-        QMessageBox::information(this, "成功", "订票成功！");
     }
     delete dialog;
 }
@@ -464,9 +489,6 @@ void Deal::on_Single_Center_clicked()
     }
     m_userProfilePage->getData(currentUserID);
     ui->stackedWidget->setCurrentWidget(m_userProfilePage);
-    // Single_Center *center = new Single_Center(currentUsername, this);
-    // center->setAttribute(Qt::WA_DeleteOnClose);
-    // center->show();
 }
 
 void Deal::on_Deal_2_clicked()

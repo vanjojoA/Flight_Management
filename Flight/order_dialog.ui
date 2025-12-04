@@ -463,6 +463,22 @@
     <string>取消</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_balance">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>370</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string>color: red; font-weight: bold;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

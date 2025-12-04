@@ -55,7 +55,7 @@ void favorite_dialog::loadFavorites()
     // 清空现有表格
     ui->tableWidget_favorites->setRowCount(0);
 
-    // 查询收藏夹内容 (直接使用 currentUserID)
+    // 查询收藏夹内容
     QSqlQuery query;
     QString sql = "SELECT t.TicketID, t.TicketType, t.TicketNo, t.DepartureCity, t.ArrivalCity, "
                   "t.DepartureTime, t.ArrivalTime, t.Price, t.Company "
@@ -171,7 +171,6 @@ void favorite_dialog::on_searchBtn_clicked()
     sql += " AND DATE(t.DepartureTime) >= :startDate";
     sql += " AND DATE(t.DepartureTime) <= :endDate";
     if (type != "全部") {
-        // 数据库存的是 Flight/Train/Bus，界面显示的是中文，需要转换
         if (type == "飞机") sql += " AND t.TicketType = 'Flight'";
         else if (type == "火车") sql += " AND t.TicketType = 'Train'";
         else if (type == "汽车") sql += " AND t.TicketType = 'Bus'";

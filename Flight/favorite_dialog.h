@@ -13,8 +13,6 @@ class favorite_dialog : public QWidget
 
 public:
     explicit favorite_dialog(QWidget *parent = nullptr);
-
-    // 修改：接收 userID 而不是 username
     explicit favorite_dialog(const QString &userID, QWidget *parent = nullptr);
 
     ~favorite_dialog();
@@ -32,7 +30,7 @@ private slots:
 private:
     Ui::favorite_dialog *ui;
 
-    QString currentUserID; // 修改：存储 UserID
+    QString currentUserID;
 
     QString currentUsername;
 

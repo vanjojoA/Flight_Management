@@ -89,7 +89,7 @@ void edit_infor::on_pushButton_clicked()
         return;
     }
 
-    // 缩放图片，避免数据库存储过大的原始图片 (例如限制为 300x300)
+    // 缩放图片，避免数据库存储过大的原始图片
     QPixmap scaledPixmap = image.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     // 更新预览和成员变量

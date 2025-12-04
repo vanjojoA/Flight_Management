@@ -162,7 +162,7 @@ void UserProfile::getData(const QString &userID)
     QSqlQuery query(db);
     query.setForwardOnly(true);
 
-    query.prepare("SELECT Username, IDCard, jianjie, avatar FROM users WHERE UserID = ?");
+    query.prepare("SELECT Username, IDCard, jianjie, avatar, Balance FROM users WHERE UserID = ?");
     query.addBindValue(userID.toInt());
 
     if (query.exec()) {
@@ -171,12 +171,12 @@ void UserProfile::getData(const QString &userID)
             QString idCard = query.value(1).toString();
             QString jianjie = query.value(2).toString();
             QByteArray avatarData = query.value(3).toByteArray();
-
+            double balance = query.value(4).toDouble();
             ui->txt_Username->setText(username);
             this->currentUsername = username;
             ui->txt_UserAccount->setText(idCard);
             ui->txt_jianjie->setText(jianjie);
-
+            ui->txt_yu->setText(QString::number(balance, 'f', 2));
             if (!avatarData.isEmpty()) {
                 QPixmap pixmap;
                 if (pixmap.loadFromData(avatarData)) {
@@ -198,3 +198,25 @@ void UserProfile::on_btn_favorites_clicked()
 {
     emit myFavoritesRequested();
 }
+<<<<<<< HEAD
+=======
+void UserProfile::on_btn_recharge_clicked(){
+    if (payWindow == nullptr) {
+        payWindow = new Pay();
+
+        // 当支付成功时，刷新个人中心数据
+        connect(payWindow, &Pay::paymentSuccess, this, [this](){
+            if (!this->userID.isEmpty()) {
+                this->getData(this->userID); // 刷新余额显示
+            }
+        });
+
+        connect(payWindow, &QWidget::destroyed, this, [=](){ payWindow = nullptr; });
+    }
+    payWindow->setUserID(this->userID);
+
+    payWindow->show();
+    payWindow->raise();
+    payWindow->activateWindow();
+}
+>>>>>>> 5fafcaf50ec0cc9da32cb6bf7688f8127dc710c2

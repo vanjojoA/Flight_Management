@@ -125,8 +125,6 @@ void MainWindow::on_log_in_clicked()
     else{
         QMessageBox::warning(this, "失败", "用户名或密码错误！");
     }
-    // UserProfile *us=new UserProfile();
-    // connect(this,SIGNAL(usernameSubmitted(QString)),us,SLOT(getData(QString)));
 }
 void MainWindow::on_sign_in_clicked()
 {

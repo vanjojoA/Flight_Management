@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QString>
-
+#include<pay.h>
 namespace Ui {
 class Single_Center;
 }
@@ -19,6 +19,7 @@ public:
     void refreshOrderList();
 signals:
     void backRequested();
+    void dataChanged();
 private slots:
 
     void onCancelOrder();

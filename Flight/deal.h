@@ -22,7 +22,6 @@ private slots:
     void on_Single_Center_clicked();
     void on_btn_search_clicked();
     void on_favorite_button_clicked();
-   // void on_btn_reset_clicked();
     void on_Deal_2_clicked();
     void onBookTicket();
     void onAddFavorite();
